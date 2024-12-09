@@ -1,6 +1,13 @@
 // import Image from "next/image";
 // import localFont from "next/font/local";
 
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getBooks } from "./api/book";
+import { useQuery } from "@tanstack/react-query";
+import Modal from "./components/Modal";
+import Book from "./components/Book";
+
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
 //   variable: "--font-geist-sans",
@@ -116,25 +123,43 @@
 
 
 export default function Home(){
-  return (
-    <main className="w-[100vw] h-[100vh] flex flex-row">
-      <section className="w-[200px] h-full bg-slate-800 text-white flex flex-col justify-start items-start">
-        <header className="w-full h-[60px] flex flex-row justify-start items-center border-b-[1px] border-gray-300">
-          <h1 className="text-lg pl-4 font-semibold font-mono">RGT</h1>
-        </header>
-        <h1  className="pl-2 py-2">사이트 관리</h1>
-        <section className="px-4 w-full grid grid-cols-1 divide-y">
-          <div>책 목록</div>
-          <div>책 추가</div>
-        </section>
+  const [page,setPage] = useState(0);
+  const [searchedBooks,setSearchedBooks] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isOpen, setIsOpen]= useState(false);
 
-      </section>
-      <section className="mainSection w-full h-full">
-        <nav className="w-full h-[60px] flex flex-row justify-start border-b-[1px] border-gray-300 items-center shadow-md drop-shadow-md">
-          <h1 className="text-lg pl-10 text-primary font-semibold font-mono">RGT Bookstore Admin</h1>
-        </nav>
-        
-      </section>
-    </main>
+  const fetchBooks = async()=>{
+    const response = await getBooks();
+    if(response.status === 200){
+      console.log(response.data);
+      return response.data;
+    }else throw new Error("데이터 로드 실패");
+  }
+  const {
+    data: books,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["getBooks"],
+    queryFn: fetchBooks,
+    // refetchInterval: 1000 * 60, // 1분마다 데이터 갱신
+  });
+  return (
+    <section className="w-full h-full flex flex-col justify-start items-center">
+      <h1 className="w-full p-8 flex justify-between">
+        <span>책 목록</span>
+        <span><input className="w-40"placeholder="책 제목, 저자를 입력하세요"/></span>
+      </h1>
+      {isLoading && <p>로딩중...</p>}
+      {isError && <p>에러</p>}
+      {books&&
+        <ul>
+          <li><Book/></li>
+        </ul>
+      }
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+    </section>
   )
 }
