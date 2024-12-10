@@ -1,7 +1,3 @@
-// import Image from "next/image";
-// import localFont from "next/font/local";
-
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getBooks } from "./api/book";
 import { useQuery } from "@tanstack/react-query";
@@ -21,14 +17,14 @@ export default function Home(){
   const [selectedBook, setSelectedBook] = useState<BookType | null>(null); 
 
   const calculatePage=()=>{
-    const totalPages = Math.ceil(books.length / 10); // 총 페이지 수
-    const maxVisiblePages = 5; // 최대 보이는 버튼 수
+    const totalPages = Math.ceil(books.length / 10); 
+    const maxVisiblePages = 5; 
     const half = Math.floor(maxVisiblePages / 2); // 현재 페이지를 기준으로 양쪽에 보일 버튼 수
 
-    let startPage = Math.max(1, page - half); // 시작 페이지
-    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1); // 끝 페이지
+    let startPage = Math.max(1, page - half); 
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-    // 마지막 페이지 근처 조정: 버튼 개수를 항상 maxVisiblePages로 유지
+    //  버튼 개수를 항상 maxVisiblePages로 유지
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
@@ -45,14 +41,13 @@ export default function Home(){
     data: books,
     isLoading,
     isError,
-    error,
-    refetch,
+    // error,
+    // refetch,
   } = useQuery({
-    queryKey: ["getBooks"],
+    queryKey: ["books"],
     queryFn: fetchBooks,
-    // refetchInterval: 1000 * 60, // 1분마다 데이터 갱신
   });
-  const onChange=(e:any)=>{
+  const onChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
     const text = e.target.value;
     setSearchText(text);
     if(text==='') setIsSearching(false);
@@ -98,38 +93,30 @@ export default function Home(){
             disabled={page===1 && true}
             className={`${page===1 &&'text-white'}`}
             ><GrPrevious/></button></li>
-          {/* {
-            Array.from({length: Math.ceil(books.length/10)}).map((_, i: number) => (
-              <li key={'page'+i}>
-                <button className={`bg-gray-300 size-8 ${page===i+1 && 'bg-gray-500'} hover:bg-gray-500 transition ease-in delay-50 rounded-sm`} onClick={() => setPage(i + 1)}>{i + 1}</button>
-              </li>
-            ))
-          } */}
+          {
+            Array.from({ length: Math.ceil(books.length / 10) }).map((_, i: number) => {
+          
+              const [startPage,endPage] = calculatePage();
+              // 현재 버튼이 표시 범위에 있는 경우만 렌더링
+              if (i + 1 >= startPage && i + 1 <= endPage) {
+                return (
+                  <li key={"page" + i}>
+                    <button
+                      className={`bg-gray-300 size-8 ${
+                        page === i + 1 && "bg-gray-500"
+                      } hover:bg-gray-500 transition ease-in delay-50 rounded-sm`}
+                      onClick={() => setPage(i + 1)}
+                    >
+                      {i + 1}
+                    </button>
+                  </li>
+                );
+              }
 
-{
-  Array.from({ length: Math.ceil(books.length / 10) }).map((_, i: number) => {
- 
-    const [startPage,endPage] = calculatePage();
-    // 현재 버튼이 표시 범위에 있는 경우만 렌더링
-    if (i + 1 >= startPage && i + 1 <= endPage) {
-      return (
-        <li key={"page" + i}>
-          <button
-            className={`bg-gray-300 size-8 ${
-              page === i + 1 && "bg-gray-500"
-            } hover:bg-gray-500 transition ease-in delay-50 rounded-sm`}
-            onClick={() => setPage(i + 1)}
-          >
-            {i + 1}
-          </button>
-        </li>
-      );
-    }
-
-    return null; // 표시 범위를 벗어난 버튼은 렌더링하지 않음
-  })
-}
-          <li><button onClick={()=>setPage((prev:number)=>(prev+1))} 
+              return null; // 표시 범위를 벗어난 버튼은 렌더링하지 않음
+            })
+          }
+                    <li><button onClick={()=>setPage((prev:number)=>(prev+1))} 
             disabled={page===Math.ceil(books.length/10) && true}
             className={`${page===Math.ceil(books.length/10) &&'text-white'}`}><GrNext/></button></li>
 

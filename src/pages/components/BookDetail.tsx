@@ -1,5 +1,4 @@
 import { BookType } from '@/types/aboutBook';
-import Link from 'next/link';
 import React from 'react'
 import { FaStar } from "react-icons/fa";
 import Image from 'next/image';

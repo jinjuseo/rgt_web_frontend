@@ -1,7 +1,5 @@
 import { BookType } from '@/types/aboutBook';
 import React from 'react'
-// import { FaBook } from "react-icons/fa6";
-import { FaBookOpen } from "react-icons/fa";
 import Image from 'next/image';
 interface BookProps{
   book:BookType;

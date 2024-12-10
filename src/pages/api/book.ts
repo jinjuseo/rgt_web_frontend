@@ -8,8 +8,8 @@ export const getBookDetails=(id:string)=>{
     return apiClient.get(`/api/books/${id}`);
 }
 
-export const addBook = (params:{})=>{
-    return apiClient.post(`/api/books/${params}`);
+export const addBook = (params:BookType)=>{
+    return apiClient.post(`/api/books`,params);
 }
 
 export const updateBook = (id:string, params:BookType)=>{

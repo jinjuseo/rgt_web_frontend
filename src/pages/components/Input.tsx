@@ -6,7 +6,7 @@ interface InputParams {
     value:string | number |undefined;
     label:string;
     blocked?:boolean;
-    onChange?:(e:any)=>void; 
+    onChange?:(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>void; 
     length?:string;
     placeholder?:string;
 }

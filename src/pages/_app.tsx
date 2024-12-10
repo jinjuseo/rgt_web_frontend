@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ImBooks } from "react-icons/im";
 import { MdAdd } from "react-icons/md";
 import 'material-react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'material-react-toastify';
+import { ToastContainer } from 'material-react-toastify';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ReactQueryProvider>

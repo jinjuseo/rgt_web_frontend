@@ -5,17 +5,31 @@ import { BookType } from '@/types/aboutBook';
 import Input from '../components/Input';
 import Image from "next/image";
 import {  toast } from 'material-react-toastify';
+import { useQueryClient } from '@tanstack/react-query';
+import { isDateValid } from '@/utils/validateDate';
 
-const checkValid = (book:BookType)=>{
-    if(!book.title ||!book.writer || !book.createdAt || !book.price ||!book.publisher || !book.quantity ||!book.description){
-        toast.warning('입력칸이 비었습니다.',{
-            theme: "colored",
+const checkValid = (book: BookType) => {
+    const requiredFields = ['title', 'writer', 'createdAt', 'price', 'publisher', 'quantity', 'description'];
+    for (const field of requiredFields) {
+      if (!book[field as keyof BookType]) {
+        toast.warning('모든 필드를 채워주세요.', { theme: 'colored' });
+        return false;
+      }
+    }
+    if (!isDateValid(book.createdAt)) {
+        toast.warning('출간일은 yyyy-mm-dd 형식의 올바른 날짜여야 합니다.', {
+          theme: 'colored',
         });
         return false;
+      }
+    if (isNaN(Number(book.price)) || isNaN(Number(book.quantity))) {
+      toast.warning('가격과 수량은 숫자여야 합니다.', { theme: 'colored' });
+      return false;
     }
     return true;
-}
+  };
 const BookModify = () => {
+    const queryClient= useQueryClient();
     const router = useRouter();
     const [bookId, setBookId] = useState<string>('');
     const [book,setBook] = useState<BookType>({
@@ -33,31 +47,36 @@ const BookModify = () => {
     });
     const onSave=async ()=>{
         const valid = checkValid(book);
-        if(valid){
+        if(!valid) return;
             try{
+
                 const response = await updateBook(bookId, book);
                 if(response.status===200){
                     //console.log(response);
                     toast.success('책 정보를 저장했습니다.', {
-                        onClose: () => router.push(`/`),
                         theme: "colored",
                     });
-                    
+                    queryClient.invalidateQueries({ queryKey: ['books'] });
+                    router.push(`/`);
                 }
-            }catch(err:Error){
+            }catch(err){
+                console.error(err);
                 toast.error('저장을 실패했습니다.',{
                     theme: "colored",
                 });
                 
             }
-            router.push(`/`);
-       
-        }}
-    const onChange = (e:any)=>{
-        setBook({...book,[e.target.name]:e.target.value});
-    }
+    
+        }
+        const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            const { name, value } = e.target;
+            setBook((prev) => ({
+              ...prev,
+              [name]: name === 'price' || name === 'quantity' ? Number(value) : value,
+            }));
+          };
     useEffect(() => {
-        if (router) {
+        if (router && typeof router.query.id === 'string') {
             setBookId(router?.query?.id);
         }
       }, [router]);
