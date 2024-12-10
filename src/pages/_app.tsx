@@ -9,7 +9,7 @@ import { ToastContainer } from 'material-react-toastify';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { GrNext } from "react-icons/gr";
-import { GrPrevious } from "react-icons/gr";
+
 
 export default function App({ Component, pageProps }: AppProps) {
   const [path,setPath] = useState<string[]>([]);
