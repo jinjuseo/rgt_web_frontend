@@ -3,7 +3,7 @@ import {BookType} from "@/tyeps/aboutBook";
 import BookDetail from "./BookDetail";
 import { MdClose } from "react-icons/md";
 interface ModalProps {
-    book: any | null; 
+    book: BookType | null; 
     onClose: () => void;
 }
 

@@ -1,18 +1,18 @@
 import apiClient from "./apiClient";
-// import {BookType} from "@/types/aboutBook";
+import {BookType} from "@/types/aboutBook";
 export const getBooks = ()=>{
     return apiClient.get('/api/books');
 }
 
-export const getBookDetails=(id:number)=>{
-    return apiClient.get(`/api/book/${id}`);
+export const getBookDetails=(id:string)=>{
+    return apiClient.get(`/api/books/${id}`);
 }
 
 export const addBook = (params:{})=>{
     return apiClient.post(`/api/books/${params}`);
 }
 
-export const updateBook = (id:number, params:{})=>{
+export const updateBook = (id:string, params:BookType)=>{
     return apiClient.put(`/api/books/${id}`, params);
 }
 

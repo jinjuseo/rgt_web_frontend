@@ -138,10 +138,10 @@ export default function Home(){
       }
       {
         books&&isSearching && 
-        <ul className="w-full h-92 p-8 flex flex-row flex-start flex-wrap ">
+        <ul className="w-full h-92 p-8 flex flex-row flex-start flex-wrap gap-4">
         {
           searchedBooks?.map((book:BookType,i:number)=>{
-            return(<li  key={i}>
+            return(<li  key={i} onClick={() => openModal(book)} className="cursor-pointer">
                     <Book book={book}/>
                   </li>);
           })

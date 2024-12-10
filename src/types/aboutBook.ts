@@ -1,6 +1,6 @@
 export interface BookType{
     id:string;
-    createdAt:number;
+    createdAt:string;
     title:string;
     imageUrl:string;
     quantity:number;

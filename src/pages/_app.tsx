@@ -8,7 +8,7 @@ import { MdAdd } from "react-icons/md";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ReactQueryProvider>
-  <div className="w-[100vw] h-[100vh] flex flex-row  ">
+  <div className="w-[100vw] h-[100vh] flex flex-row ">
       <section className="w-[200px] h-full bg-slate-800 text-white flex flex-col justify-start items-start">
         <header className="w-full h-[60px] flex flex-row justify-start items-center border-b-[1px] border-gray-300">
           <h1 className="text-lg pl-4 font-semibold font-mono">RGT</h1>
@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <nav className="w-full h-[60px] flex flex-row justify-start border-b-[1px] border-gray-300 items-center shadow-md drop-shadow-md">
           <h1 className="text-lg pl-10 text-primary font-semibold font-mono">RGT Bookstore Admin</h1>
         </nav>
-        <main className="w-full h-[calc(100%-60px)]">
+        <main className="w-full h-[calc(100%-60px)] overflow-auto">
           <Component {...pageProps} />
         </main>
       </section>

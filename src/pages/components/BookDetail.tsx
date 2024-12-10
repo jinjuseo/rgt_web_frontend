@@ -6,15 +6,7 @@ import { FaStar } from "react-icons/fa";
 interface BookDetailProps{
     book:BookType;
 }
-const formatDate = (timestamp:number)=>{
-    const date = new Date(timestamp * 1000); // 밀리초로 변환
 
-    // 년-월-일로 포맷팅
-    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-    return formattedDate;
-}
 const BookDetail: React.FC<BookDetailProps> = ({book}) => {
   return (
         <div className='w-full h-full bookDetails flex flex-row justify-start gap-4'>
@@ -26,15 +18,18 @@ const BookDetail: React.FC<BookDetailProps> = ({book}) => {
             <ul className='list-disc list-inside'>
                 <li>{book?.writer +' 저'}</li>
                 <li>{book?.publisher}</li>
-                <li>{formatDate(book?.createdAt)}</li>
+                <li>{book?.createdAt}</li>
+                <li>{`${book?.price} ￦`}</li>
+                <li>{`수량 ${book?.quantity} 권`}</li>
                 <li className="">
+                        <span>평점</span>
                         <FaStar className='text-yellow-300 inline-block mr-1 text-center'/>
                         <span >{`${book?.starRating.toFixed(1)}`}</span>
                 </li>
                 <li>{`판매지수 ${book?.salesVolume}`}</li>
-                <li>{`수량 ${book?.quantity} 권`}</li>
+              
             </ul>
-            <Link className='flex justify-end' href={`/book/${book?.id}`}><span className="bg-stone-300 text-white p-1 px-2 rounded hover:bg-stone-400 transition ease-in delay-150">수정</span></Link>
+            <Link className='flex justify-end' href={`/book/${book?.id}`}><span className="bg-stone-300 text-white p-1 px-2 rounded hover:bg-stone-400 transition ease-in delay-50">수정</span></Link>
         </div>
 
         </div>
