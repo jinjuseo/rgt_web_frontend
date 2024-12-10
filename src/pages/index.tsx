@@ -70,7 +70,10 @@ export default function Home(){
       {
         books && !isSearching &&
         <ul className="min-w-5 flex flex-row flex-start gap-x-2 items-center">
-          {page!==1&&<li><button onClick={()=>setPage((prev:number)=>(prev-1))}><GrPrevious/></button></li>}
+            <li><button onClick={()=>setPage((prev:number)=>(prev-1))}
+            disabled={page===1 && true}
+            className={`${page===1 &&'text-white'}`}
+            ><GrPrevious/></button></li>
           {
             Array.from({length: Math.ceil(books.length/10)}).map((_, i: number) => (
               <li key={'page'+i}>
@@ -78,8 +81,11 @@ export default function Home(){
               </li>
             ))
           }
+          <li><button onClick={()=>setPage((prev:number)=>(prev+1))} 
+            disabled={page===Math.ceil(books.length/10) && true}
+            className={`${page===Math.ceil(books.length/10) &&'text-white'}`}><GrNext/></button></li>
 
-          {page!==Math.ceil(books.length/10)&&<li><button onClick={()=>setPage((prev:number)=>(prev+1))}><GrNext/></button></li>}
+          
         </ul>
       }
       {
