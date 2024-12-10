@@ -44,7 +44,7 @@ const BookDetail: React.FC<BookDetailProps> = ({book,onClose}) => {
         <div className='description w-full h-12 break-words overflow-auto'>
             {book?.description}
         </div>
-        <a onClick={onClick}className='flex justify-end' ><span className="bg-stone-300 text-white p-2 px-4 rounded hover:bg-stone-400 transition ease-in delay-50">수정</span></a>
+        <a onClick={onClick}className='flex justify-end' ><span className="bg-stone-300 text-white p-2 px-4 rounded hover:bg-stone-400 transition ease-in delay-50 cursor-pointer">수정</span></a>
     </section>
   )
 }

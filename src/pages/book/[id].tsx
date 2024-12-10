@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { getBookDetails, updateBook } from '../api/book';
 import { BookType } from '@/types/aboutBook';
 import Input from '../components/Input';
-import Image from "next/image"
+import Image from "next/image";
+import {  toast } from 'material-react-toastify';
 
 const checkValid = (book:BookType)=>{
-    if(!book.title ||!book.writer || !book.createdAt || !book.price ||!book.publisher || !book.quantity){
-        alert('에러');
+    if(!book.title ||!book.writer || !book.createdAt || !book.price ||!book.publisher || !book.quantity ||!book.description){
+        toast.warning('입력칸이 비었습니다.',{
+            theme: "colored",
+        });
         return false;
     }
     return true;
@@ -31,13 +34,25 @@ const BookModify = () => {
     const onSave=async ()=>{
         const valid = checkValid(book);
         if(valid){
-            const response = await updateBook(bookId, book);
-            if(response.status===200){
-                console.log(response);
+            try{
+                const response = await updateBook(bookId, book);
+                if(response.status===200){
+                    //console.log(response);
+                    toast.success('책 정보를 저장했습니다.', {
+                        onClose: () => router.push(`/`),
+                        theme: "colored",
+                    });
+                    
+                }
+            }catch(err:Error){
+                toast.error('저장을 실패했습니다.',{
+                    theme: "colored",
+                });
+                
             }
-        }
+            router.push(`/`);
        
-    }
+        }}
     const onChange = (e:any)=>{
         setBook({...book,[e.target.name]:e.target.value});
     }
@@ -52,7 +67,7 @@ const BookModify = () => {
     const fetchBook = async()=>{
         const response = await getBookDetails(bookId);
         if(response.status === 200){
-            setBook(response.data);
+            setBook({...response.data});
         }else throw new Error("데이터 로드 실패");
 
     }
@@ -78,8 +93,9 @@ const BookModify = () => {
                     <textarea 
                     maxLength={100}
                     id='description'
-                    defaultValue={book?.description} 
-                    // value={book?.description}       
+                    name='description'
+                    // defaultValue={book?.description} 
+                    value={book?.description}       
                     onChange={onChange} 
                     className={`outline-none border-primary border-[1px] rounded-sm p-2 w-60 h-20`}
                     placeholder='옛날 옛적에 착한 흥부와 그의 형 나쁜 놀부가 살았는데 ...' >
@@ -94,6 +110,7 @@ const BookModify = () => {
                 >저장</button></div>
             </div>
         </div>
+       
   </div>
   )
 }
