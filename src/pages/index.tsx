@@ -11,13 +11,29 @@ import { BookType } from '../types/aboutBook';
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 
+
 export default function Home(){
   const [page,setPage] = useState(1);
   const [searchedBooks,setSearchedBooks] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isOpen, setIsOpen]= useState(false);
+  const [selectedBook, setSelectedBook] = useState<BookType | null>(null); 
 
+  const calculatePage=()=>{
+    const totalPages = Math.ceil(books.length / 10); // 총 페이지 수
+    const maxVisiblePages = 5; // 최대 보이는 버튼 수
+    const half = Math.floor(maxVisiblePages / 2); // 현재 페이지를 기준으로 양쪽에 보일 버튼 수
+
+    let startPage = Math.max(1, page - half); // 시작 페이지
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1); // 끝 페이지
+
+    // 마지막 페이지 근처 조정: 버튼 개수를 항상 maxVisiblePages로 유지
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    return [startPage, endPage];
+  }
   const fetchBooks = async()=>{
     const response = await getBooks();
     if(response.status === 200){
@@ -48,8 +64,16 @@ export default function Home(){
       setSearchedBooks(filtered);
     }
   },[searchText])
+  const openModal=(book:BookType)=>{
+    setIsOpen(true);
+    setSelectedBook(book);
+  }
+  const closeModal=()=>{
+    setIsOpen(false);
+    setSelectedBook(null);
+  }
   return (
-    <section className="w-full h-full flex flex-col justify-start items-center overflow-y-auto">
+    <section className="w-full h-full p-4 flex flex-col gap-4 justify-start items-center overflow-y-auto ">
       <h1 className="w-full p-8 flex justify-between">
         <span>책 목록</span>
         <span><input onChange={onChange} className="w-52 border-primary border-[1px] outline-none p-2"placeholder="책 제목, 저자를 입력하세요."/></span>
@@ -57,10 +81,10 @@ export default function Home(){
       {isLoading && <p>로딩중...</p>}
       {isError && <p>에러</p>}
       { books && !isSearching &&
-        <ul className="w-full p-8 flex flex-row flex-start flex-wrap">
+        <ul className="w-full p-8 flex flex-row flex-start flex-wrap gap-4 ">
           {
             books?.slice((page-1)*10, page*10).map((book:BookType,i:number)=>{
-              return(<li  key={i}>
+              return(<li    onClick={() => openModal(book)}className="cursor-pointer" key={i}>
                       <Book book={book}/>
                     </li>);
             })
@@ -74,13 +98,37 @@ export default function Home(){
             disabled={page===1 && true}
             className={`${page===1 &&'text-white'}`}
             ><GrPrevious/></button></li>
-          {
+          {/* {
             Array.from({length: Math.ceil(books.length/10)}).map((_, i: number) => (
               <li key={'page'+i}>
-                <button className={`bg-gray-300 size-8 ${page===i+1 && 'bg-gray-500'} hover:bg-gray-500`} onClick={() => setPage(i + 1)}>{i + 1}</button>
+                <button className={`bg-gray-300 size-8 ${page===i+1 && 'bg-gray-500'} hover:bg-gray-500 transition ease-in delay-50 rounded-sm`} onClick={() => setPage(i + 1)}>{i + 1}</button>
               </li>
             ))
-          }
+          } */}
+
+{
+  Array.from({ length: Math.ceil(books.length / 10) }).map((_, i: number) => {
+ 
+    const [startPage,endPage] = calculatePage();
+    // 현재 버튼이 표시 범위에 있는 경우만 렌더링
+    if (i + 1 >= startPage && i + 1 <= endPage) {
+      return (
+        <li key={"page" + i}>
+          <button
+            className={`bg-gray-300 size-8 ${
+              page === i + 1 && "bg-gray-500"
+            } hover:bg-gray-500 transition ease-in delay-50 rounded-sm`}
+            onClick={() => setPage(i + 1)}
+          >
+            {i + 1}
+          </button>
+        </li>
+      );
+    }
+
+    return null; // 표시 범위를 벗어난 버튼은 렌더링하지 않음
+  })
+}
           <li><button onClick={()=>setPage((prev:number)=>(prev+1))} 
             disabled={page===Math.ceil(books.length/10) && true}
             className={`${page===Math.ceil(books.length/10) &&'text-white'}`}><GrNext/></button></li>
@@ -100,7 +148,9 @@ export default function Home(){
         }
       </ul>
       }
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {isOpen && (
+        <Modal book={selectedBook} onClose={closeModal} />
+      )}
     </section>
   )
 }
