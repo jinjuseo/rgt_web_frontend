@@ -18,8 +18,8 @@ const BookDetail: React.FC<BookDetailProps> = ({book,onClose}) => {
     <section className='w-full h-full flex flex-col justify-start gap-y-2'>
         <h1 className="font-semibold text-2xl">{book?.title}</h1>
         <div className='w-full h-full bookDetails flex flex-row justify-start gap-x-8'>
-        <div className='bookImage w-[140px] h-[200px] bg-primary flex justify-center items-center text-6xl shadow-xl dropshadow-xl text-white rounded-sm '>
-            <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl||'/bookImage.jpg'}/>
+        <div className='bookImage w-[140px] h-[200px]  flex justify-center items-center text-6xl shadow-xl dropshadow-xl text-white rounded-sm '>
+            <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl||'/bookImage.jpg'} unoptimized/>
         </div>
         <div className='bookInfo w-3/5 h-full'>
            

@@ -87,8 +87,8 @@ const onSave=async ()=>{
     return (
       <div className='w-full h-full p-4 flex flex-row justify-evenly flex-wrap '>
           <div className='bookImage min-w-[500px] w-2/5 h-full flex justify-center items-center '>
-              <div className='w-1/2 min-w-[480px] h-3/4 bg-primary text-white font-5xl flex justify-center items-center shadow-xl drop-shadow-xl'>
-              <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl||'/bookImage.jpg'}/>
+              <div className='w-1/2 min-w-[500px] h-3/4 bg-transparent text-white font-5xl flex justify-center items-center shadow-xl drop-shadow-xl'>
+              <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl||'/bookImage.jpg'}unoptimized/>
               </div>
            
           </div>

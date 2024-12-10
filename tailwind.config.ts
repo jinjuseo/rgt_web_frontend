@@ -16,5 +16,8 @@ export default {
       },
     },
   },
+  images: {
+    unoptimized: true,
+  },
   plugins: [],
 } satisfies Config;
