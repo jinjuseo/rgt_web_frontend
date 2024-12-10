@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <nav className="w-full h-[60px] flex flex-row justify-start border-b-[1px] border-gray-300 items-center shadow-md drop-shadow-md">
           <h1 className="text-lg pl-10 text-primary font-semibold font-mono">RGT Bookstore Admin</h1>
         </nav>
-        <main>
+        <main className="w-full h-[calc(100%-60px)]">
           <Component {...pageProps} />
         </main>
       </section>
