@@ -16,6 +16,6 @@ export const updateBook = (id:string, params:BookType)=>{
     return apiClient.put(`/api/books/${id}`, params);
 }
 
-export const deleteBook = (id:number)=>{
+export const deleteBook = (id:string)=>{
     return apiClient.delete(`/api/books/${id}`);
 }
