@@ -14,6 +14,10 @@ export default {
         'primary' : '#1a185c',
         'secondary':'#402eb7',
       },
+      fontFamily: {
+        notosans: ["NotoSansKorean"],
+      },
+
     },
   },
   images: {

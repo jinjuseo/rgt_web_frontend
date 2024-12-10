@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { GrNext } from "react-icons/gr";
 
-
 export default function App({ Component, pageProps }: AppProps) {
   const [path,setPath] = useState<string[]>([]);
   const router= useRouter();
@@ -32,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
   },[router])
   return (
     <ReactQueryProvider>
-  <div className="w-[100vw] h-[100vh] flex flex-row ">
+  <div className="w-[100vw] h-[100vh] flex flex-row font-['NotoSansKorean'] ">
       <section className="w-[200px] h-full bg-slate-800 text-white flex flex-col justify-start items-start">
         <header className="w-full h-[60px] flex flex-row justify-start items-center border-b-[1px] border-gray-300">
           <Link href={'/'}className="text-lg pl-4 font-semibold font-mono">RGT</Link>

@@ -11,8 +11,8 @@ const Book:React.FC<BookProps> = ({book}) => {
         <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl||'/bookImage.jpg'} unoptimized/>
     </div>
     <div className='bookInfo w-full'>
-        <h1 className='font-bold'>{book?.title}</h1>
-        <p className='w-full flex flex-row justify-start gap-x-2'>
+        <h1 className='font-bold text-lg'>{book?.title}</h1>
+        <p className='w-full flex flex-row justify-start gap-x-2 text-sm'>
             <span>{book?.writer+' 저'}</span>
             <span> | </span>
             <span>{book?.publisher}</span>
