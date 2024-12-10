@@ -12,7 +12,7 @@ const Modal: React.FC<ModalProps> = ({ book, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-[32rem]">
 
         <h2 className="text-xl font-semibold mb-4 flex flex-row justify-end">
             <button
@@ -23,9 +23,9 @@ const Modal: React.FC<ModalProps> = ({ book, onClose }) => {
         </button>    
         </h2>
 
-        <p className="text-gray-700 mb-6">
-            <BookDetail book={book}/>
-            </p>
+        <div className="text-gray-700 mb-6">
+            <BookDetail book={book} onClose={onClose}/>
+            </div>
       </div>
     </div>
   );

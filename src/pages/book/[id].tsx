@@ -1,11 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import BookInputs from '../components/BookInputs';
 import { getBookDetails, updateBook } from '../api/book';
 import { BookType } from '@/types/aboutBook';
 import Input from '../components/Input';
-import { FaBookOpen } from "react-icons/fa";
-
+import Image from "next/image"
 
 const checkValid = (book:BookType)=>{
     if(!book.title ||!book.writer || !book.createdAt || !book.price ||!book.publisher || !book.quantity){
@@ -17,7 +15,19 @@ const checkValid = (book:BookType)=>{
 const BookModify = () => {
     const router = useRouter();
     const [bookId, setBookId] = useState<string>('');
-    const [book,setBook] = useState<BookType>(null);
+    const [book,setBook] = useState<BookType>({
+        id:'',
+        createdAt:'',
+        title:'',
+        imageUrl:'',
+        quantity:0,
+        description:'',
+        writer:'',
+        publisher:'',
+        price:0,
+        salesVolume:0,
+        starRating:0,
+    });
     const onSave=async ()=>{
         const valid = checkValid(book);
         if(valid){
@@ -49,8 +59,8 @@ const BookModify = () => {
   return (
     <div className='w-full h-full p-4 flex flex-row justify-evenly flex-wrap '>
         <div className='bookImage min-w-[500px] w-2/5 h-full flex justify-center items-center '>
-            <div className='w-1/2 min-w-[480px] h-3/4 bg-primary text-white font-5xl flex justify-center items-center'>
-                <FaBookOpen className="text-[100px]"/>
+            <div className='w-1/2 min-w-[480px] h-3/4 bg-primary text-white font-5xl flex justify-center items-center shadow-xl drop-shadow-xl'>
+            <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl||'/bookImage.jpg'}/>
             </div>
          
         </div>
@@ -62,12 +72,23 @@ const BookModify = () => {
 
                 <Input type={'string'} value={book?.createdAt} name='createdAt' label={'출간일'} onChange={onChange} length='md' placeholder='2018-01-01'/>
                 <Input type={'number'} value={book?.price} name='price' label={'판매가'} onChange={onChange} length='md' placeholder='12000'/>
+
+                <div className="flex w-full justify-start items-center">
+                    <label htmlFor={'description'} className="min-w-20">{'설명'}</label>
+                    <textarea 
+                    maxLength={100}
+                    id='description'
+                    defaultValue={book?.description} 
+                    // value={book?.description}       
+                    onChange={onChange} 
+                    className={`outline-none border-primary border-[1px] rounded-sm p-2 w-60 h-20`}
+                    placeholder='옛날 옛적에 착한 흥부와 그의 형 나쁜 놀부가 살았는데 ...' >
+                </textarea>
+                </div>
                 <Input type={'number'} value={book?.quantity} name='quantity' label={'수량'} onChange={onChange} length='sm' placeholder='999'/>
-
-
-
                 <Input type={'number'} value={book?.starRating} label={'평점'}name='starRating' blocked={true} length='sm'/>
-                <Input type={'number'} value={book?.salesVolume} label={'판매지수'}name='salesVolume' blocked={true} length='sm'/>
+                <Input type={'number'} value={book?.salesVolume} label={'판매지수'} name='salesVolume' blocked={true} length='sm'/>
+
                 <div className='w-full flex flex-row justify-end'><button className="bg-secondary text-white p-2 rounded px-4 transition delay-50 ease-in hover:bg-cyan-900"
                 onClick={onSave}
                 >저장</button></div>

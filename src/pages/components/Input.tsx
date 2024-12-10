@@ -20,7 +20,7 @@ const Input:React.FC<InputParams> = ({type,name,value,blocked,onChange,label,len
         className={`outline-none border-primary border-[1px] rounded-sm p-2 
             ${length==='sm' ? 'w-16' : length ==='md' ?'w-40' :'w-60'}
             `}
-        name={name} type={type} value={value} disabled={blocked}/>
+        id={name} type={type} value={value} disabled={blocked}/>
     </div>
     
   )
