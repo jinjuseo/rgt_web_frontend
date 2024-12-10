@@ -69,14 +69,14 @@ export default function Home(){
   }
   return (
     <section className="w-full h-full p-4 flex flex-col gap-4 justify-start items-center overflow-y-auto ">
-      <h1 className="w-full p-8 flex justify-between">
-        <span>책 목록</span>
+      <h1 className="w-full px-8 py-4 flex justify-between">
+        <span className="text-3xl font-bold text-primary">책 목록</span>
         <span><input onChange={onChange} className="w-52 border-primary border-[1px] outline-none p-2"placeholder="책 제목, 저자를 입력하세요."/></span>
       </h1>
       {isLoading && <p>로딩중...</p>}
       {isError && <p>에러</p>}
       { books && !isSearching &&
-        <ul className="w-full min-h-[36rem] max-h-[40rem] overflow-y-auto p-8 flex flex-row flex-start flex-wrap gap-4 ">
+        <ul className="w-full min-h-[36rem] max-h-[44rem] overflow-y-auto p-8 flex flex-row flex-start flex-wrap gap-4 ">
           {
             books?.slice((page-1)*10, page*10).map((book:BookType,i:number)=>{
               return(<li  onClick={() => openModal(book)}className="cursor-pointer" key={i}>
