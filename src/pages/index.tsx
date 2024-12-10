@@ -76,10 +76,10 @@ export default function Home(){
       {isLoading && <p>로딩중...</p>}
       {isError && <p>에러</p>}
       { books && !isSearching &&
-        <ul className="w-full p-8 flex flex-row flex-start flex-wrap gap-4 ">
+        <ul className="w-full min-h-[36rem] max-h-[40rem] overflow-y-auto p-8 flex flex-row flex-start flex-wrap gap-4 ">
           {
             books?.slice((page-1)*10, page*10).map((book:BookType,i:number)=>{
-              return(<li    onClick={() => openModal(book)}className="cursor-pointer" key={i}>
+              return(<li  onClick={() => openModal(book)}className="cursor-pointer" key={i}>
                       <Book book={book}/>
                     </li>);
             })
