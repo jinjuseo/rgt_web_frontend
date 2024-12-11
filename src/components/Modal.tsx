@@ -1,5 +1,5 @@
 import React from "react";
-import {BookType} from "@/tyeps/aboutBook";
+import {BookType} from "@/types/aboutBook";
 import BookDetail from "./BookDetail";
 import { MdClose } from "react-icons/md";
 interface ModalProps {
