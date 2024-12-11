@@ -21,12 +21,14 @@ const BookDetail: React.FC<BookDetailProps> = ({book,onClose}) => {
     const onDelete = async ()=>{
         const answer = confirm('삭제하시면 복구하실 수 없습니다\n정말 삭제하시겠습니까?');
         if(!answer) return;
+        if(!book?.id) return;
         try{
             const response = await deleteBook(book?.id);
             if(response.status ===200){
                 toast.success('책 정보를 삭제하였습니다.', {
                     theme: 'colored',
                 });
+                queryClient.invalidateQueries({ queryKey: ['totalBooks'] });
                 queryClient.invalidateQueries({ queryKey: ['books'] });
                 onClose();
             }

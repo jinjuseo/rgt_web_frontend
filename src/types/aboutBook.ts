@@ -1,5 +1,5 @@
 export interface BookType{
-    id:string;
+    id?:string;
     createdAt:string;
     title:string;
     imageUrl:string;

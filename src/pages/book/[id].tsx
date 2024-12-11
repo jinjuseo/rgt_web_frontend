@@ -56,6 +56,7 @@ const BookModify = () => {
                     toast.success('책 정보를 저장했습니다.', {
                         theme: "colored",
                     });
+                    queryClient.invalidateQueries({ queryKey: ['totalBooks'] });
                     queryClient.invalidateQueries({ queryKey: ['books'] });
                     router.push(`/`);
                 }

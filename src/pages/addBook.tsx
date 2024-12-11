@@ -62,6 +62,7 @@ const onSave=async ()=>{
               toast.success('책 상품을 추가하였습니다.', {
                   theme: "colored",
               });
+              queryClient.invalidateQueries({ queryKey: ['totalBooks'] });
               queryClient.invalidateQueries({ queryKey: ['books'] });
               router.push(`/`);
               
