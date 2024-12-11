@@ -65,12 +65,13 @@ export default function Home(){
     if(text==='') setIsSearching(false);
     else setIsSearching(true);
   }
+
   useEffect(()=>{
     if(isSearching){
       const filtered = totalBooks?.filter((book:BookType)=>  book.title.includes(searchText)|| book.writer.includes(searchText));
       setSearchedBooks(filtered);
     }
-  },[searchText])
+  },[searchText,totalBooks])
   const openModal=(book:BookType)=>{
     setIsOpen(true);
     setSelectedBook(book);
