@@ -1,39 +1,48 @@
 import { useEffect, useState } from "react";
-import { getBooks } from "../api/book";
-import { useQuery } from "@tanstack/react-query";
+import { getBooks, getBooksPaging } from "../api/book";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import Modal from "../components/Modal";
 import Book from "../components/Book";
 import { BookType } from '../types/aboutBook';
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
-
+import { toast } from "material-react-toastify";
+import { getPageNumbers } from "@/utils/utils";
+const PAGE_LIMIT=10;
+const MAX_PAGE_BUTTONS =5;
 
 export default function Home(){
-  const [page,setPage] = useState(1);
   const [searchedBooks,setSearchedBooks] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isOpen, setIsOpen]= useState(false);
   const [selectedBook, setSelectedBook] = useState<BookType | null>(null); 
+  const [currentPage,setCurrentPage] = useState(1);
 
-  const calculatePage=()=>{
-    const totalPages = Math.ceil(books.length / 10); 
-    const maxVisiblePages = 5; 
-    const half = Math.floor(maxVisiblePages / 2); // 현재 페이지를 기준으로 양쪽에 보일 버튼 수
-
-    let startPage = Math.max(1, page - half); 
-    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-    //  버튼 개수를 항상 maxVisiblePages로 유지
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-    return [startPage, endPage];
-  }
-  const fetchBooks = async()=>{
+  //전체 책 count를 알기 위해서 (페이징을 하기위해서) 
+  //mockapi에는 전체 카운트를 안알려주기때문
+  const fetchTotalBooks = async()=>{
     const response = await getBooks();
+    try{
+      if(response.status === 200){
+        return response.data;
+      }else throw new Error("데이터 로드 실패");
+    }catch(err){
+      console.error(err);
+      toast.error('전체 책 정보를 받아오는데 실패했습니다');
+    }
+  }
+  const {
+    data: totalBooks,
+  } = useQuery({
+    queryKey: ["totalBooks"],
+    queryFn: fetchTotalBooks,
+  });
+
+  //paging해서 데이터요청
+    const fetchBooks = async(page:number, limit:number)=>{
+    const response = await getBooksPaging(page,limit);
     if(response.status === 200){
-      console.log(response.data);
       return response.data;
     }else throw new Error("데이터 로드 실패");
   }
@@ -41,12 +50,15 @@ export default function Home(){
     data: books,
     isLoading,
     isError,
-    // error,
-    // refetch,
   } = useQuery({
-    queryKey: ["books"],
-    queryFn: fetchBooks,
+    queryKey: ["books", currentPage], // 쿼리 키에 페이지 번호 포함
+    queryFn: () => fetchBooks(currentPage, PAGE_LIMIT), 
+    placeholderData:keepPreviousData,
   });
+
+  const totalPages = totalBooks ? Math.ceil(totalBooks.length/PAGE_LIMIT) : 0;
+  const pageNumbers = getPageNumbers(currentPage, totalPages, MAX_PAGE_BUTTONS);
+
   const onChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
     const text = e.target.value;
     setSearchText(text);
@@ -55,7 +67,7 @@ export default function Home(){
   }
   useEffect(()=>{
     if(isSearching){
-      const filtered = books?.filter((book:BookType)=>  book.title.includes(searchText)|| book.writer.includes(searchText));
+      const filtered = totalBooks?.filter((book:BookType)=>  book.title.includes(searchText)|| book.writer.includes(searchText));
       setSearchedBooks(filtered);
     }
   },[searchText])
@@ -78,7 +90,7 @@ export default function Home(){
       { books && !isSearching &&
         <ul className="w-full min-h-[36rem] max-h-[44rem] overflow-y-auto p-8 flex flex-row flex-start flex-wrap gap-4 ">
           {
-            books?.slice((page-1)*10, page*10).map((book:BookType,i:number)=>{
+            books?.map((book:BookType,i:number)=>{
               return(<li  onClick={() => openModal(book)}className="cursor-pointer" key={i}>
                       <Book book={book}/>
                     </li>);
@@ -89,36 +101,28 @@ export default function Home(){
       {
         books && !isSearching &&
         <ul className="min-w-5 flex flex-row flex-start gap-x-2 items-center">
-            <li><button onClick={()=>setPage((prev:number)=>(prev-1))}
-            disabled={page===1 && true}
-            className={`${page===1 &&'text-white'}`}
+            <li><button onClick={()=>setCurrentPage((prev:number)=>Math.max(prev - 1, 1))}
+            disabled={currentPage===1}
             ><GrPrevious/></button></li>
-          {
-            Array.from({ length: Math.ceil(books.length / 10) }).map((_, i: number) => {
-          
-              const [startPage,endPage] = calculatePage();
-              // 현재 버튼이 표시 범위에 있는 경우만 렌더링
-              if (i + 1 >= startPage && i + 1 <= endPage) {
-                return (
-                  <li key={"page" + i}>
-                    <button
-                      className={`bg-gray-300 size-8 ${
-                        page === i + 1 && "bg-gray-500"
+          {pageNumbers.map((page) => (
+            <li key={'page/'+page}>
+                <button
+                    onClick={() => setCurrentPage(page)}
+                    className={`size-8 ${
+                      page === currentPage ? 'bg-gray-500' : 'bg-gray-300'
                       } hover:bg-gray-500 transition ease-in delay-50 rounded-sm`}
-                      onClick={() => setPage(i + 1)}
                     >
-                      {i + 1}
+                      {page}
                     </button>
-                  </li>
-                );
-              }
 
-              return null; // 표시 범위를 벗어난 버튼은 렌더링하지 않음
-            })
-          }
-                    <li><button onClick={()=>setPage((prev:number)=>(prev+1))} 
-            disabled={page===Math.ceil(books.length/10) && true}
-            className={`${page===Math.ceil(books.length/10) &&'text-white'}`}><GrNext/></button></li>
+            </li>
+          
+            ))}
+
+            <li><button onClick={()=>setCurrentPage((prev:number)=> Math.min(prev + 1, totalPages))} 
+            disabled={currentPage===totalPages}
+            >
+              <GrNext/></button></li>
 
           
         </ul>

@@ -1,8 +1,12 @@
 import apiClient from "./apiClient";
 import {BookType} from "@/types/aboutBook";
 export const getBooks = ()=>{
-    return apiClient.get('/api/books');
+    return apiClient.get(`/api/books`);
 }
+export const getBooksPaging = (page:number,limit:number)=>{
+    return apiClient.get(`/api/books?p=${page}&l=${limit}`);
+}
+
 
 export const getBookDetails=(id:string)=>{
     return apiClient.get(`/api/books/${id}`);
