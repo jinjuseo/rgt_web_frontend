@@ -1,15 +1,21 @@
 ## Getting Started
 
-개발 서버 설치 및 실행:
 ```bash
+#개발 시 패키지 매니저 yarn 사용하였음
 1. 패키지 설치
 npm install
 #or 
 yarn install
+
 2. 실행 
 npm run dev
 # or
 yarn dev
+
+3. test 실행
+npm run test
+# or
+yarn test
 ```
 
 
@@ -17,7 +23,7 @@ yarn dev
 - **`Project` :** 온라인 서점을 위한 관리자 서비스
 - **`Project duration` :** 2024.12.09 - 2024.12.11
 - **`Developer ` :** **서 진주**
-- **`Link` :** [🌐 RGT_Bookstore_Admin](https://rgt_bookstore_admin.run/)
+- **`Link` :** [🌐 https://rgt-bookstore-admin.vercel.app/](https://rgt-bookstore-admin.vercel.app/) 
 - **`Notion`:** [RGT_Bookstore_Admin_Notion](https://www.notion.so/westpearl/1572585ce0eb80fa9a12da1f409ade0e?pvs=4)
 - **`시연 영상`:** [시연 영상]()
 
@@ -33,13 +39,17 @@ yarn dev
 ##  ⚙️ **Tools** 
 
 
-| NextJS | Typescript  | TailwindCSS | Axios | React Query | mockAPI | Vercel|
-| :----: | :--------: |   :---: | :---: | :---------: | :---------: | :---------: |
-| <img alt="NextJS" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwqsJpxyle5L9PwXST_rmofMHmA7HEXA30fw&s" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="Typecript" width="65" height="65" /> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2560px-Tailwind_CSS_Logo.svg.png" alt="TailwindCSS" width="65" height="65" /> | <img src="https://user-images.githubusercontent.com/45915619/233941806-5d6d2a03-3b82-4267-8966-2eb8b32c9ba0.png" alt="axios" width="65" height="65" /> | <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR6cDwwea5Cf865N8HQYn7J42_QiilcOj9Ug&s" alt="ReactQuery" width="80" height="80" /> | <img src="https://i.ytimg.com/vi/qp6ErTuVGg8/hqdefault.jpg" alt="mockAPI" width="80" height="80" /> |<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Vercel_logo_black.svg/2560px-Vercel_logo_black.svg.png" alt="Vercel" width="80" height="40" /> |
+| NextJS | Typescript  | TailwindCSS | Axios | React Query | mockAPI | Vercel| Jest | 
+| :----: | :--------: |   :---: | :---: | :---------: | :---------: | :---------: | :---------: |
+| <img alt="NextJS" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwqsJpxyle5L9PwXST_rmofMHmA7HEXA30fw&s" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="Typecript" width="65" height="65" /> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2560px-Tailwind_CSS_Logo.svg.png" alt="TailwindCSS" width="65" height="65" /> | <img src="https://user-images.githubusercontent.com/45915619/233941806-5d6d2a03-3b82-4267-8966-2eb8b32c9ba0.png" alt="axios" width="65" height="65" /> | <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR6cDwwea5Cf865N8HQYn7J42_QiilcOj9Ug&s" alt="ReactQuery" width="80" height="80" /> | <img src="https://i.ytimg.com/vi/qp6ErTuVGg8/hqdefault.jpg" alt="mockAPI" width="80" height="80" /> |<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Vercel_logo_black.svg/2560px-Vercel_logo_black.svg.png" alt="Vercel" width="80" height="40" /> |<img src="https://iconape.com/wp-content/png_logo_vector/jest-logo.png" alt="Jest" width="60" height="60" /> |
 
 
-## 🔖Directory Tree
-
+## 🔖Version 
+- Node.js v18
+- Next.js v15.0.4
+- react v19.0.0
+- @types/jest v29.5.14
+- @tanstack/react-query v5.62.3
 
 
 ## 🌟 Pages 
