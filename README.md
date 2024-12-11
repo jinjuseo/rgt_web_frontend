@@ -16,6 +16,9 @@ yarn dev
 npm run test
 # or
 yarn test
+
+#.env 파일 (환경변수설정필요)
+NEXT_PUBLIC_API_ADDRESS=https://675697c411ce847c992d57cb.mockapi.io
 ```
 
 
