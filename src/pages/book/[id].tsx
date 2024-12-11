@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import { getBookDetails, updateBook } from '../api/book';
+import { getBookDetails, updateBook } from '../../api/book';
 import { BookType } from '@/types/aboutBook';
-import Input from '../components/Input';
+import Input from '../../components/Input';
 import Image from "next/image";
 import {  toast } from 'material-react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
@@ -94,7 +94,7 @@ const BookModify = () => {
     <div className='w-full h-full p-4 flex flex-row justify-evenly flex-wrap '>
         <div className='bookImage min-w-[500px] w-2/5 h-full flex justify-center items-center '>
             <div className='w-1/2 min-w-[500px] h-3/4  text-primary font-5xl flex justify-center items-center shadow-xl drop-shadow-xl'>
-            <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl} unoptimized/>
+            <Image width={0} height={0} style={{ width: 'auto', height: '100%' }} alt={'책 이미지'} src={book?.imageUrl || '/bookImage.jpg'}  unoptimized/>
             </div>
          
         </div>

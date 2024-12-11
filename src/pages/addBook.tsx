@@ -2,9 +2,9 @@ import { BookType } from '@/types/aboutBook';
 import React, { useState } from 'react'
 import {  toast } from 'material-react-toastify';
 import { useRouter } from 'next/router';
-import { addBook } from './api/book';
+import { addBook } from '../api/book';
 import Image from "next/image"
-import Input from './components/Input';
+import Input from '../components/Input';
 import { useQueryClient } from '@tanstack/react-query';
 import { isDateValid } from '@/utils/validateDate';
 

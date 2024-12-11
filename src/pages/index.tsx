@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getBooks } from "./api/book";
+import { getBooks } from "../api/book";
 import { useQuery } from "@tanstack/react-query";
-import Modal from "./components/Modal";
-import Book from "./components/Book";
+import Modal from "../components/Modal";
+import Book from "../components/Book";
 import { BookType } from '../types/aboutBook';
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
