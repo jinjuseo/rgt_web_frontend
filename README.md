@@ -23,11 +23,11 @@ NEXT_PUBLIC_API_ADDRESS=https://675697c411ce847c992d57cb.mockapi.io
 
 
 # RGT Bookstore Admin (RBA)
-- **`Project` :** 온라인 서점을 위한 관리자 서비스
+- **`Project` :** 온라인 서점을 위한 관리자 웹 서비스 개발
 - **`Project duration` :** 2024.12.09 - 2024.12.11
 - **`Developer ` :** **서 진주**
 - **`Link` :** [🌐 https://rgt-bookstore-admin.vercel.app/](https://rgt-bookstore-admin.vercel.app/) 
-- **`Notion`:** [RGT_Bookstore_Admin_Notion](https://www.notion.so/westpearl/1572585ce0eb80fa9a12da1f409ade0e?pvs=4)
+- **`Notion`:** [온라인 서점을 위한 관리자 웹 어플리케이션](https://www.notion.so/westpearl/1572585ce0eb80fa9a12da1f409ade0e?pvs=4)
 - **`시연 영상`:** [시연 영상]()
 
 

@@ -10,7 +10,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { GrNext } from "react-icons/gr";
 
+export const metadata = {
+  title: "RGT Bookstore Admin",
+  description: "Frontend Developer Subject",
+};
 export default function App({ Component, pageProps }: AppProps) {
+ 
   const [path,setPath] = useState<string[]>([]);
   const router= useRouter();
   useEffect(()=>{
@@ -31,6 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
   },[router])
   return (
     <ReactQueryProvider>
+        <link rel="icon" href="/favicon.ico" sizes="any"/>
   <div className="w-[100vw] h-[100vh] flex flex-row font-['NotoSansKorean'] ">
       <section className="w-[200px] h-full bg-slate-800 text-white flex flex-col justify-start items-start">
         <header className="w-full h-[60px] flex flex-row justify-start items-center border-b-[1px] border-gray-300">
